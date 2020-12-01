@@ -135,7 +135,7 @@ Generalization performance for Knowledge Distill
 - Support **Knowledge Distill**, teacher-student, designed by myself
 - Support other LR_SCHEDULER
 - Support Optimizer [RangerLars](https://github.com/pabloppp/pytorch-tools.git), not convergence in COCO
-- We provide some examples and scripts to convert centerX to Caffe, ONNX and TensorRT format in [projects/speedup](https://github.com/CPFLAME/centerX/projects/speedup)
+- We provide some examples and scripts to convert centerX to Caffe, ONNX and TensorRT format in [projects/speedup](https://github.com/CPFLAME/centerX/tree/master/projects/speedup)
  
 ## What\'s comming 
 - [️✔] Support simple inference 
@@ -144,7 +144,7 @@ Generalization performance for Knowledge Distill
 
 ## License
 
-centerX is released under the [Apache 2.0 license.](https://github.com/CPFLAME/centerX/LICENSE)
+centerX is released under the [Apache 2.0 license.](https://github.com/CPFLAME/centerX/blob/master/LICENSE)
 
 ## Acknowledgement
 
