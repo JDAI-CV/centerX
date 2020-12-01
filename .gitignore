@@ -1,0 +1,8 @@
+datasets/
+output/
+exp_results/
+models/
+*.pth
+*.pyth
+*.jpg
+*.pyc

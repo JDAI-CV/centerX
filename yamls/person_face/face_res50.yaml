@@ -1,0 +1,33 @@
+_BASE_: "./face_res18.yaml"
+MODEL:
+  # WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  # WEIGHTS: 'https://download.pytorch.org/models/resnet50-19c8e357.pth'
+
+  META_ARCHITECTURE: "CenterNet"
+  BN_TYPE: "BN" #SyncBN
+  BACKBONE:
+    NAME: "build_resnet"
+    DEPTH: 50
+    PRETRAIN: True
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+
+  CENTERNET:
+    DECONV_CHANNEL: [2048, 256, 128, 64]
+    DECONV_KERNEL: [4, 4, 4]
+    NUM_CLASSES: 1
+    MODULATE_DEFORM: True
+    USE_DEFORM: True
+    BIAS_VALUE: -2.19
+    DOWN_SCALE: 4
+    MIN_OVERLAP: 0.3
+    TENSOR_DIM: 512
+
+TEST:
+  EVAL_PERIOD: 3
+DATALOADER:
+  NUM_WORKERS: 4
+
+
+OUTPUT_DIR: "exp_results/person_face/R50_face_adam"
+VERSION: 2

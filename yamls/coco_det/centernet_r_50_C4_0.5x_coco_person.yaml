@@ -1,0 +1,8 @@
+_BASE_: "centernet_r_50_C4_0.5x_coco_car.yaml"
+
+DATASETS:
+  TRAIN: ("crowd_human_train",)
+  TEST: ("crowd_human_val",)
+
+OUTPUT_DIR: "exp_results/coco_det/crowd_R50_SGD"
+VERSION: 2

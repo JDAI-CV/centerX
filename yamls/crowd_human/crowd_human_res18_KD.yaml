@@ -1,0 +1,38 @@
+_BASE_: "crowd_human_res18.yaml"
+
+MODEL:
+  #WEIGHTS: 'models/crowd_human_exp_R18_sgd_BN.pth'
+  CENTERNET:
+    KD:
+      ENABLED: True
+#      TEACHER_CFG: ["yamls/crowd_human/crowd_human_res50.yaml",]
+      TEACHER_CFG: ["yamls/coco_det/centernet_r_18_C4_0.5x_coco_person.yaml",]
+      #TEACHER_WEIGTHS: "exp_results/crowd_human_exp_R50_sgd_BN/model_final.pth"
+      #TEACHER_WEIGTHS: ["models/crowd_human_exp_R50_sgd_BN.pth"]
+      TEACHER_WEIGTHS: ["models/coco_det_crowd_R18_SGD_model_final.pth"]
+      KD_WEIGHT: [1.0]
+      KD_CLS_WEIGHT: [1000.0]
+      KD_WH_WEIGHT: [1.0]
+      KD_REG_WEIGHT: [0.1]
+      NORM_WH: [True]
+      KD_WITHOUT_LABEL: True
+
+SOLVER:
+  IMS_PER_BATCH: 64
+  WARMUP_ITERS: 1
+  STEPS: (90, 120)
+  MAX_ITER: 140
+  BASE_LR: 0.02 #5e-4
+  LR_SCHEDULER_NAME: "WarmupMultiStepLR"
+  OPTIM_NAME: "SGD"
+  CLIP_GRADIENTS:
+    ENABLED: True
+    CLIP_TYPE: "value"
+    CLIP_VALUE: 1.0
+
+DATASETS:
+  TRAIN: ("crowd_human_train",) #"coco_2017_train")
+  TEST: ("coco_person_val",) #("crowd_human_val",)
+
+
+OUTPUT_DIR: "exp_results/crowd_test"

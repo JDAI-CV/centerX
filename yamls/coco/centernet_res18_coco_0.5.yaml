@@ -1,0 +1,57 @@
+MODEL:
+  # WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  # WEIGHTS: 'https://download.pytorch.org/models/resnet50-19c8e357.pth'
+
+  META_ARCHITECTURE: "CenterNet"
+  BN_TYPE: "BN"
+  BACKBONE:
+    NAME: "build_resnet"
+    DEPTH: 18
+    PRETRAIN: True
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+
+  CENTERNET:
+    DECONV_CHANNEL: [512, 256, 128, 64]
+    DECONV_KERNEL: [4, 4, 4]
+    NUM_CLASSES: 80
+    MODULATE_DEFORM: True
+    BIAS_VALUE: -2.19
+    DOWN_SCALE: 4
+    MIN_OVERLAP: 0.3
+    TENSOR_DIM: 128
+
+TEST:
+  EVAL_PERIOD: 1
+DATALOADER:
+  NUM_WORKERS: 8
+
+DATASETS:
+  TRAIN: ("coco_2017_train",)
+  TEST: ("coco_2017_val",)
+
+SOLVER:
+  IMS_PER_BATCH: 64
+  WARMUP_ITERS: 1
+  STEPS: (50, 62)
+  MAX_ITER: 70
+  BASE_LR: 0.02 #5e-4
+  LR_SCHEDULER_NAME: "WarmupCosineAnnealingLR"
+  COSINE_DECAY_ITER: 0.5
+  OPTIM_NAME: "SGD"
+#  CLIP_GRADIENTS:
+#    ENABLED: True
+#    CLIP_TYPE: "norm"
+
+INPUT:
+  FORMAT: 'RGB'
+  MIN_SIZE_TEST: 0
+  MIN_SIZE_TRAIN: (384, 448, 512,)
+  MAX_SIZE_TRAIN: 512
+  CROP:
+    ENABLED: True
+    TYPE: "relative_range"
+    SIZE: [0.6, 0.6]
+
+OUTPUT_DIR: "exp_results/coco/coco_exp_R18_SGD_0.5"
+VERSION: 2

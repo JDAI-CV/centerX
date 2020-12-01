@@ -1,0 +1,12 @@
+_BASE_: "crowd_human_res18.yaml"
+
+MODEL:
+  BACKBONE:
+    NAME: "build_resnet"
+    DEPTH: 50
+    PRETRAIN: True
+
+  CENTERNET:
+    DECONV_CHANNEL: [2048, 256, 128, 64]
+
+OUTPUT_DIR: "exp_results/crowd_human/crowd_human_exp_R50_sgd_mse"

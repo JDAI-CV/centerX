@@ -1,0 +1,14 @@
+_BASE_: "crowd_human_res18.yaml"
+
+DATALOADER:
+  NUM_WORKERS: 8
+SOLVER:
+  BASE_LR: 0.001 #5e-4
+  LR_SCHEDULER_NAME: "WarmupCosineAnnealingLR"
+  OPTIM_NAME: "RangerLars"
+#  CLIP_GRADIENTS:
+#    ENABLED: True
+#    CLIP_TYPE: "norm"
+
+
+OUTPUT_DIR: "exp_results/crowd_human_exp_R18_RangerLars"

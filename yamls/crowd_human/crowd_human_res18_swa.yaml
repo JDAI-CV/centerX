@@ -1,0 +1,13 @@
+_BASE_: "crowd_human_res18.yaml"
+
+SOLVER:
+  MAX_ITER: 70
+  SWA:
+    ENABLED: True
+    ITER: 10
+    PERIOD: 1
+    LR_START: 0.002
+    ETA_MIN_LR: 0.0001
+    LR_SCHED: True
+
+OUTPUT_DIR: "exp_results/crowd_human_exp_R18_sgd_BN_swa"

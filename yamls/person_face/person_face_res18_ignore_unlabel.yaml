@@ -1,0 +1,64 @@
+_BASE_: "../Base-CenterNet.yaml"
+MODEL:
+  # WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  # WEIGHTS: 'https://download.pytorch.org/models/resnet50-19c8e357.pth'
+
+  META_ARCHITECTURE: "CenterNet"
+  BN_TYPE: "BN" #SyncBN
+  BACKBONE:
+    NAME: "build_resnet"
+    DEPTH: 18
+    PRETRAIN: True
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+
+  CENTERNET:
+    DECONV_CHANNEL: [512, 256, 128, 64]
+    DECONV_KERNEL: [4, 4, 4]
+    NUM_CLASSES: 2
+    MODULATE_DEFORM: True
+    USE_DEFORM: True
+    BIAS_VALUE: -2.19
+    DOWN_SCALE: 4
+    MIN_OVERLAP: 0.3
+    TENSOR_DIM: 128
+    LOSS:
+      IGNORE_UNLABEL: True
+#      WH_WEIGHT: 10.0
+#      NORM_WH: True
+
+TEST:
+  EVAL_PERIOD: 3
+DATALOADER:
+  NUM_WORKERS: 4
+
+DATASETS:
+  TRAIN: ("crowd_human_face_train","widerface_crowdhuman_train")
+  TEST: ("crowd_human_face_val",)  #("crowd_human_val",)
+
+SOLVER:
+  IMS_PER_BATCH: 64
+  WARMUP_ITERS: 1
+  STEPS: (50, 62)
+  MAX_ITER: 140
+  BASE_LR: 2.5e-5
+  LR_SCHEDULER_NAME: "WarmupCosineAnnealingLR"
+  COSINE_DECAY_ITER: 0.6
+  OPTIM_NAME: "Adam"
+  CLIP_GRADIENTS:
+    ENABLED: True
+    CLIP_VALUE: 0.6
+
+INPUT:
+  FORMAT: 'RGB'
+  MIN_SIZE_TEST: 384
+  MAX_SIZE_TEST: 640
+  MIN_SIZE_TRAIN: (384,)
+  MAX_SIZE_TRAIN: 640
+  CROP:
+    ENABLED: True
+    TYPE: "relative_range"
+    SIZE: [0.6, 0.6]
+
+OUTPUT_DIR: "exp_results/person_face/R18_person_face_adam_ignore_unlabel"
+VERSION: 2

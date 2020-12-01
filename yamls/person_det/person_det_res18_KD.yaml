@@ -1,0 +1,52 @@
+_BASE_: "./person_det_res18.yaml"
+MODEL:
+  # WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  WEIGHTS: 'models/R18_adam_nodeform.pth'
+
+  CENTERNET:
+    KD:
+      ENABLED: True
+      TEACHER_CFG: ["yamls/person_det/person_det_res50.yaml",]
+      TEACHER_WEIGTHS: ["exp_results/person_det/R50_adam/model_final.pth",]
+      KD_WEIGHT: [1.0]
+      KD_CLS_WEIGHT: [1000.0]
+      KD_WH_WEIGHT: [1.0]
+      KD_REG_WEIGHT: [0.1]
+      NORM_WH: [True]
+      KD_WITHOUT_LABEL: False
+
+TEST:
+  EVAL_PERIOD: 3
+DATALOADER:
+  NUM_WORKERS: 6
+
+DATASETS:
+  TRAIN: ("crowd_human_train", "bj_train", "7f_train", "coco_person_train")
+  TEST: ("bj_val",)  #("crowd_human_val",)
+
+SOLVER:
+  IMS_PER_BATCH: 64
+  WARMUP_ITERS: 1
+  STEPS: (50, 62)
+  MAX_ITER: 70
+  BASE_LR: 5e-4
+  LR_SCHEDULER_NAME: "WarmupCosineAnnealingLR"
+  COSINE_DECAY_ITER: 0.6
+  OPTIM_NAME: "Adam"
+  CLIP_GRADIENTS:
+    ENABLED: True
+    CLIP_VALUE: 0.6
+
+INPUT:
+  FORMAT: 'RGB'
+  MIN_SIZE_TEST: 384
+  MAX_SIZE_TEST: 640
+  MIN_SIZE_TRAIN: (384,)
+  MAX_SIZE_TRAIN: 640
+  CROP:
+    ENABLED: True
+    TYPE: "relative_range"
+    SIZE: [0.75, 0.75]
+
+OUTPUT_DIR: "exp_results/person_det/R18_adam_nodeform_KD"
+VERSION: 2

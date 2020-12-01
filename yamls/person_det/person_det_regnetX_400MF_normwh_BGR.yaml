@@ -1,0 +1,14 @@
+_BASE_: "./person_det_regnetX_400MF.yaml"
+MODEL:
+  CENTERNET:
+    LOSS:
+      NORM_WH: True
+      WH_WEIGHT: 10.0
+  PIXEL_MEAN: [0.406, 0.456, 0.485]
+  PIXEL_STD: [0.225, 0.224, 0.229]
+
+INPUT:
+  FORMAT: 'BGR'
+
+OUTPUT_DIR: "exp_results/person_det/regnetX400MF_adam_nodeform_normwh_BGR"
+VERSION: 2

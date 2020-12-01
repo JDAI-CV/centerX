@@ -1,0 +1,9 @@
+_BASE_: "./person_det_regnetX_400MF.yaml"
+MODEL:
+  CENTERNET:
+    LOSS:
+      NORM_WH: True
+      WH_WEIGHT: 10.0
+
+OUTPUT_DIR: "exp_results/person_det/regnetX400MF_adam_nodeform_normwh"
+VERSION: 2

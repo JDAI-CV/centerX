@@ -1,0 +1,21 @@
+_BASE_: "centernet_r_18_C4_0.5x_coco_person.yaml"
+
+SOLVER:
+  IMS_PER_BATCH: 64
+  WARMUP_ITERS: 1
+  STEPS: (50, 62)
+  MAX_ITER: 70
+  BASE_LR: 2.5e-4 #5e-4
+  LR_SCHEDULER_NAME: "WarmupCosineAnnealingLR"
+  COSINE_DECAY_ITER: 0.6
+  OPTIM_NAME: "Adam"
+  CLIP_GRADIENTS:
+    ENABLED: True
+    CLIP_VALUE: 0.6
+
+DATASETS:
+  TRAIN: ("coco_car_train",)
+  TEST: ("coco_car_val",)
+
+OUTPUT_DIR: "exp_results/coco_det/coco_car_R18_SGD"
+VERSION: 2

@@ -1,0 +1,7 @@
+_BASE_: "crowd_human_res18.yaml"
+
+MODEL:
+  CENTERNET:
+    IMGAUG_PROB: 0.5
+
+OUTPUT_DIR: "exp_results/crowd_human_exp_R18_sgd_BN_imgaug"

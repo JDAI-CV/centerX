@@ -1,0 +1,80 @@
+MODEL:
+  #WEIGHTS: 'models/coco_exp_R18_adam_BN.pth'
+  #WEIGHTS: 'exp_results/coco_det/crowd_R18_SGD/model_final.pth'
+  META_ARCHITECTURE: "CenterNet"
+  BN_TYPE: "BN"
+  BACKBONE:
+    NAME: "build_regnet"
+    STR_DEPTH: "400x"
+    PRETRAIN: True
+    PRETRAIN_PATH: "models/RegNetX-400MF_dds_8gpu.pyth"
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+
+  CENTERNET:
+    DECONV_CHANNEL: [384, 128, 96, 64]
+    DECONV_KERNEL: [4, 4, 4]
+    NUM_CLASSES: 2
+    MODULATE_DEFORM: True
+    USE_DEFORM: False
+    BIAS_VALUE: -2.19
+    DOWN_SCALE: 4
+    MIN_OVERLAP: 0.3
+    TENSOR_DIM: 128
+    RESIZE_TYPE: "Resize"
+    LOSS:
+      COMMUNISM:
+        ENABLE: True
+        CLS_LOSS: 1.0
+        WH_LOSS: 1.0
+        OFF_LOSS: 0.1
+    KD:
+      ENABLED: True
+      TEACHER_CFG: ["yamls/person_face/person_det_regnetY_4000GF.yaml", "yamls/person_face/face_regnetY_4000GF.yaml"]
+      TEACHER_WEIGTHS: ["exp_results/person_face/regnetY4000GF_person_resize/model_final.pth", "exp_results/person_face/face_regnetY4000GF_resize/model_final.pth"]
+      KD_WEIGHT: [1.2, 1.0]
+      KD_CLS_WEIGHT: [1000.0, 2000.0]
+      KD_WH_WEIGHT: [1.0, 2.0]
+      KD_REG_WEIGHT: [0.1, 0.1]
+      KD_CLS_INDEX: [1, 2]
+      NORM_WH: [True, True]
+      KD_WITHOUT_LABEL: True
+
+SOLVER:
+  IMS_PER_BATCH: 64
+  WARMUP_ITERS: 1
+  STEPS: (90, 120)
+  MAX_ITER: 70
+  #BASE_LR: 1.25e-4
+  BASE_LR: 0.01
+  LR_SCHEDULER_NAME: "WarmupCosineAnnealingLR"
+  COSINE_DECAY_ITER: 0.1
+  #OPTIM_NAME: "Adam"
+  OPTIM_NAME: "SGD"
+  CLIP_GRADIENTS:
+    ENABLED: True
+    CLIP_TYPE: "value"
+    CLIP_VALUE: 0.5
+
+INPUT:
+  FORMAT: 'RGB'
+  MIN_SIZE_TEST: 384
+  MAX_SIZE_TEST: 640
+  MIN_SIZE_TRAIN: (384,)
+  MAX_SIZE_TRAIN: 640
+  CROP:
+    ENABLED: True
+    TYPE: "relative_range"
+    SIZE: [0.75, 0.75]
+
+TEST:
+  EVAL_PERIOD: 3
+DATALOADER:
+  NUM_WORKERS: 4
+
+DATASETS:
+  TRAIN: ("crowd_human_train", "bj_train", "7f_train", "coco_person_train", "face_wider_mafa_bj_train")
+  TEST: ("bj_val",)  #("crowd_human_face_val",)
+
+
+OUTPUT_DIR: "exp_results/person_face/person_face_regnetX_multiKD_sgd_resize_140epoch"
