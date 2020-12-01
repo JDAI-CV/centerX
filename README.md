@@ -2,6 +2,19 @@
 
 This repo is implemented based on [detectron2](https://github.com/facebookresearch/detectron2) and  [CenterNet](https://github.com/xingyizhou/CenterNet)
 
+## What\'s new
+- Support [imgaug](https://github.com/aleju/imgaug.git) data augmentation
+- Support [swa](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
+- Support **Knowledge Distill**, teacher-student, designed by myself
+- Support other LR_SCHEDULER
+- Support Optimizer [RangerLars](https://github.com/pabloppp/pytorch-tools.git), not convergence in COCO
+- We provide some examples and scripts to convert centerX to Caffe, ONNX and TensorRT format in [projects/speedup](https://github.com/CPFLAME/centerX/tree/master/projects/speedup)
+ 
+## What\'s comming 
+- [️✔] Support simple inference 
+- [✔] Support to caffe, onnx, tensorRT
+- [ ] Support keypoints 
+
 ## Requirements
 
 - Python >= 3.7
@@ -128,19 +141,6 @@ Generalization performance for Knowledge Distill
 | 5.resdcn18_ignore_nolabel| 29.1             | 24.2           |  140   |   -     |    -             |crowd+wider|
 | 6.resdcn18_pseudo_label  | 28.9             | 27.7           |  140   |   -     |    -             |crowd+wider|
 | 7.resdcn18_KD_woGT_scratch| 31.3            | 32.1           |  140  |  1,3    | imagenet         |crowd+wider|
-
-## What\'s new
-- Support [imgaug](https://github.com/aleju/imgaug.git) data augmentation
-- Support [swa](https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/)
-- Support **Knowledge Distill**, teacher-student, designed by myself
-- Support other LR_SCHEDULER
-- Support Optimizer [RangerLars](https://github.com/pabloppp/pytorch-tools.git), not convergence in COCO
-- We provide some examples and scripts to convert centerX to Caffe, ONNX and TensorRT format in [projects/speedup](https://github.com/CPFLAME/centerX/tree/master/projects/speedup)
- 
-## What\'s comming 
-- [️✔] Support simple inference 
-- [✔] Support to caffe, onnx, tensorRT
-- [ ] Support keypoints 
 
 ## License
 
