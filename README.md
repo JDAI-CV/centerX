@@ -1,6 +1,6 @@
 # CenterX
 
-This repo is implemented based on [detectron2](https://github.com/facebookresearch/detectron2) and [CenterNet-better](https://github.com/FateScript/CenterNet-better/edit/master/README.md) and [CenterNet-better-plus](https://github.com/lbin/CenterNet-better-plus.git)
+This repo is implemented based on [detectron2](https://github.com/facebookresearch/detectron2) and  [CenterNet](https://github.com/xingyizhou/CenterNet)
 
 ## Requirements
 
@@ -57,23 +57,23 @@ This repo use less training time to get a competitive performance compared to ot
 
 Backbone ResNet-50
 
-| Code             | mAP  | epoch | optim |
-| ---------------- | ---- | ----- | ----- |
-| centerX          | 33.2 |  70   | Adam  |
-| centerX          | 34.3 |  140  | SGD   |
-| centernet-better | 34.9 |  140  | SGD   |
+| Code             | mAP  | epoch |
+| ---------------- | ---- | ----- |
+| centerX          | 33.2 |  70   |
+| centerX          | 34.3 |  140  |
+| centernet-better | 34.9 |  140  |
 
 Backbone ResNet-18
 
 centerX_KD means ResNet-50(33.2) as teacher, ResNet-18(27.9) as student, Knowledge Distill for 70 epoch in coco.
 
-| Code             | mAP  | epoch | optim |
-| ---------------- | ---- | ----- | ----- |
-| centerX          | 30.2 |  140  |  SGD  |
-| centerX          | 27.9 |  70   |  Adam |
-| centerX_KD       | 31.0 |  70   |  Adam |
-| centernet-better | 29.8 |  140  |  SGD  |
-| centernet        | 28.1 |  140  |  Adam |
+| Code             | mAP  | epoch |
+| ---------------- | ---- | ----- |
+| centerX          | 30.2 |  140  |
+| centerX          | 27.9 |  70   |
+| centerX_KD       | 31.0 |  70   |
+| centernet-better | 29.8 |  140  |
+| centernet        | 28.1 |  140  |
 
 ### crowd human
 - optim: SGD
@@ -111,14 +111,13 @@ Generalization performance for Knowledge Distill
 
 ### multi teacher KD
 
-| Backbone                 |  mAP       | epoch | teacher | student_pretrain | train_set |
-| ----------------         | ----       | ----- |  -----  | -------          | -----     |
-| 1.resdcn50               | 35.1       |  80   |   -     |    -             | crowd     |
-| 2.resdcn18               | 31.7       |  70   |   -     |    -             | crowd     |
-| 3.resdcn50               | 31.6       |  70   |   -     |    -             | coco_car  |
-| 4.resdcn18               | 27.8       |  70   |   -     |    -             | coco_car  |
-| resdcn18_KD_woGT_scratch | crowd 31.6 |  140  |  1,3    | imagenet         | crowd+coco_car|
-| resdcn18_KD_woGT_scratch |coco_car 29.4|  140  |  1,3    | imagenet         | crowd+coco_car|
+| Backbone                 |  mAP crowd     |  mAP coco_car  | epoch | teacher | student_pretrain | train_set |
+| ----------------         | ----           | ----           | ----- |  -----  | -------          | -----     |
+| 1.resdcn50               | 35.1           | -              |  80   |   -     |    -             | crowd     |
+| 2.resdcn18               | 31.7           | -              |  70   |   -     |    -             | crowd     |
+| 3.resdcn50               | -              | 31.6           |  70   |   -     |    -             | coco_car  |
+| 4.resdcn18               | -              | 27.8           |  70   |   -     |    -             | coco_car  |
+| resdcn18_KD_woGT_scratch | 31.6           | 29.4           |  140  |  1,3    | imagenet         | crowd+coco_car|
 
 | Backbone                 |  mAP crowd_human |  mAP widerface | epoch | teacher | student_pretrain | train_set |
 | ----------------         | ----             | -------------- | ----- |  -----  | -------          | -----     |
@@ -136,11 +135,16 @@ Generalization performance for Knowledge Distill
 - Support **Knowledge Distill**, teacher-student, designed by myself
 - Support other LR_SCHEDULER
 - Support Optimizer [RangerLars](https://github.com/pabloppp/pytorch-tools.git), not convergence in COCO
+- We provide some examples and scripts to convert centerX to Caffe, ONNX and TensorRT format in [projects/speedup](https://github.com/CPFLAME/projects/speedup)
  
 ## What\'s comming 
-- [✔️] Support simple inference 
+- [️✔] Support simple inference 
+- [✔] Support to caffe, onnx, tensorRT
 - [ ] Support keypoints 
-- [ ] Support to caffe, onnx, tensorRT
+
+## License
+
+centerX is released under the [Apache 2.0 license.](https://github.com/CPFLAME/LICENSE)
 
 ## Acknowledgement
 
@@ -148,6 +152,4 @@ Generalization performance for Knowledge Distill
 - [CenterNet](https://github.com/xingyizhou/CenterNet)
 - [CenterNet-better](https://github.com/FateScript/CenterNet-better)
 - [CenterNet-better-plus](https://github.com/lbin/CenterNet-better-plus.git)
-
-
-Thank to [Xingyu Liao](https://github.com/L1aoXingyu), [gcong18](https://github.com/gcong18), [YuxiangJohn](https://github.com/YuxiangJohn), [wiggin66](https://github.com/wiggin66) [daquexian](https://github.com/daquexian) for help in PyTorch model converting
+- [FastReID](https://github.com/JDAI-CV/fast-reid)
