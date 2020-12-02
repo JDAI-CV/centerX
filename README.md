@@ -39,7 +39,7 @@ gcc --version
 pip install -U 'git+https://github.com/CPFLAME/detectron2.git'
 ```
 
-- [pytoch tools](https://github.com/pabloppp/pytorch-tools.git)
+- [pytorch tools](https://github.com/pabloppp/pytorch-tools.git)
 
 ```shell
 pip install git+https://github.com/pabloppp/pytorch-tools -U
