@@ -1,4 +1,4 @@
-<img src=".github/.png" width="300" >
+<img src="cplogo.png" width="300" >
 
 # CenterX
 
